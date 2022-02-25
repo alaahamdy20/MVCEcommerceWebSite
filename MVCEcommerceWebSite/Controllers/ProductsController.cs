@@ -10,8 +10,8 @@ using MVCEcommerceWebSite.Data;
 
 namespace MVCEcommerceWebSite.Controllers
 {
-    [Authorize]
-    public class ProductsController : Controller
+/*    [Authorize]
+*/    public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
 

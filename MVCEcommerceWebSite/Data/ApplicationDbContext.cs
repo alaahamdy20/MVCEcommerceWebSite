@@ -12,6 +12,7 @@ namespace MVCEcommerceWebSite.Data
             : base(options)
         {
         }
+       
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
