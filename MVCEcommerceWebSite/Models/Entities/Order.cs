@@ -12,21 +12,25 @@ namespace MVCEcommerceWebSite.Data
     {
         [Key]
         public long Id { get; set; }
-        public string Name { get; set; }
-        public string age { get; set; }
+        public virtual ICollection<OrderItem> OrderItems { get; set; }
+
         [Required(ErrorMessage = "Please enter the address to ship to")]
 
+        public virtual IdentityUser User { get; set; }
         [ForeignKey("User")]
-        public string UserId { get; set;  }
+        public string UserId { get; set; }
         // public OrderInfo OrderInfo { get; set; }
 
+        public virtual Address Address { get; set; }
+        [ForeignKey("Address")]
         public long AddressId { get; set; }
         public string TrackingNumber { get; set; }
-        
+/*        public ShippingStatus OrderStatus { get; set; }
+*/        [NotMapped] public decimal Sum { get; set; }
+
         public DateTime CreatedAt { get; set; }
         private DateTime UpdatedAt { get; set; }
-        public virtual IdentityUser User { get; set; }
-        
+
 
     }
 

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVCEcommerceWebSite.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220225122958_dbv")]
-    partial class dbv
+    [Migration("20220225142307_dbv11")]
+    partial class dbv11
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
