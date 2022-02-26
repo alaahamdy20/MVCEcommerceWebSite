@@ -53,9 +53,7 @@ namespace MVCEcommerceWebSite.Services
             p.Price = newObjectOfT.Price;
             p.Description = newObjectOfT.Description;
             p.Stock = newObjectOfT.Stock;
-            p.ProductCategories = newObjectOfT.ProductCategories;
             p.ProductImages = newObjectOfT.ProductImages;
-            p.Slug = newObjectOfT.Slug;
             return dbContext.SaveChanges();
         }
         

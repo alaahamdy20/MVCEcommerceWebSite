@@ -45,7 +45,6 @@ namespace MVCEcommerceWebSite.Services
         {
             Category p = GetById(id);
             p.Name = newObjectOfT.Name;
-            p.CategoryImages = newObjectOfT.CategoryImages;
             
             return dbContext.SaveChanges();
         }

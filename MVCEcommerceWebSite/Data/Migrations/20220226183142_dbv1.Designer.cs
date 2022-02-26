@@ -4,14 +4,16 @@ using MVCEcommerceWebSite.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MVCEcommerceWebSite.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220226183142_dbv1")]
+    partial class dbv1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,9 +64,6 @@ namespace MVCEcommerceWebSite.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FilePath")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -224,8 +223,8 @@ namespace MVCEcommerceWebSite.Data.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("CategoryId")
-                        .HasColumnType("bigint");
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -236,14 +235,76 @@ namespace MVCEcommerceWebSite.Data.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("PublishAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Slug")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("MVCEcommerceWebSite.Data.ProductCategory", b =>
+                {
+                    b.Property<long>("CategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("CategoryId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductCategory");
+                });
+
+            modelBuilder.Entity("MVCEcommerceWebSite.Data.ProductTag", b =>
+                {
+                    b.Property<long>("TagId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("TagId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductTag");
+                });
+
+            modelBuilder.Entity("MVCEcommerceWebSite.Data.Tag", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -446,6 +507,18 @@ namespace MVCEcommerceWebSite.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("MVCEcommerceWebSite.Data.CategoryImage", b =>
+                {
+                    b.HasBaseType("MVCEcommerceWebSite.Data.FileUpload");
+
+                    b.Property<long>("CategoryId")
+                        .HasColumnType("bigint");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasDiscriminator().HasValue("CategoryImage");
+                });
+
             modelBuilder.Entity("MVCEcommerceWebSite.Data.ProductImage", b =>
                 {
                     b.HasBaseType("MVCEcommerceWebSite.Data.FileUpload");
@@ -456,6 +529,18 @@ namespace MVCEcommerceWebSite.Data.Migrations
                     b.HasIndex("ProductId");
 
                     b.HasDiscriminator().HasValue("ProductImage");
+                });
+
+            modelBuilder.Entity("MVCEcommerceWebSite.Data.TagImage", b =>
+                {
+                    b.HasBaseType("MVCEcommerceWebSite.Data.FileUpload");
+
+                    b.Property<long>("TagId")
+                        .HasColumnType("bigint");
+
+                    b.HasIndex("TagId");
+
+                    b.HasDiscriminator().HasValue("TagImage");
                 });
 
             modelBuilder.Entity("MVCEcommerceWebSite.Data.Address", b =>
@@ -532,15 +617,40 @@ namespace MVCEcommerceWebSite.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MVCEcommerceWebSite.Data.Product", b =>
+            modelBuilder.Entity("MVCEcommerceWebSite.Data.ProductCategory", b =>
                 {
                     b.HasOne("MVCEcommerceWebSite.Data.Category", "Category")
-                        .WithMany("Products")
+                        .WithMany("ProductCategories")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MVCEcommerceWebSite.Data.Product", "Product")
+                        .WithMany("ProductCategories")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("MVCEcommerceWebSite.Data.ProductTag", b =>
+                {
+                    b.HasOne("MVCEcommerceWebSite.Data.Product", "Product")
+                        .WithMany("ProductTags")
+                        .HasForeignKey("ProductId")
+                        .IsRequired();
+
+                    b.HasOne("MVCEcommerceWebSite.Data.Tag", "Tag")
+                        .WithMany("ProductTags")
+                        .HasForeignKey("TagId")
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Tag");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -594,6 +704,17 @@ namespace MVCEcommerceWebSite.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MVCEcommerceWebSite.Data.CategoryImage", b =>
+                {
+                    b.HasOne("MVCEcommerceWebSite.Data.Category", "Category")
+                        .WithMany("CategoryImages")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("MVCEcommerceWebSite.Data.ProductImage", b =>
                 {
                     b.HasOne("MVCEcommerceWebSite.Data.Product", "Product")
@@ -605,9 +726,22 @@ namespace MVCEcommerceWebSite.Data.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("MVCEcommerceWebSite.Data.TagImage", b =>
+                {
+                    b.HasOne("MVCEcommerceWebSite.Data.Tag", "Tag")
+                        .WithMany("TagImages")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tag");
+                });
+
             modelBuilder.Entity("MVCEcommerceWebSite.Data.Category", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("CategoryImages");
+
+                    b.Navigation("ProductCategories");
                 });
 
             modelBuilder.Entity("MVCEcommerceWebSite.Data.Comment", b =>
@@ -624,7 +758,18 @@ namespace MVCEcommerceWebSite.Data.Migrations
                 {
                     b.Navigation("Comments");
 
+                    b.Navigation("ProductCategories");
+
                     b.Navigation("ProductImages");
+
+                    b.Navigation("ProductTags");
+                });
+
+            modelBuilder.Entity("MVCEcommerceWebSite.Data.Tag", b =>
+                {
+                    b.Navigation("ProductTags");
+
+                    b.Navigation("TagImages");
                 });
 #pragma warning restore 612, 618
         }
