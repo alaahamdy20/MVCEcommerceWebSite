@@ -1,134 +1,106 @@
-﻿@model MVCEcommerceWebSite.Data.Product
+﻿@model Product
 
 @{
-    ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Create";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<div>
 
-<h4>Product</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Stock" class="control-label"></label>
-                <input asp-for="Stock" class="form-control" />
-                <span asp-validation-for="Stock" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Slug" class="control-label"></label>
-                <input asp-for="Slug" class="form-control" />
-                <span asp-validation-for="Slug" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PublishAt" class="control-label"></label>
-                <input asp-for="PublishAt" class="form-control" />
-                <span asp-validation-for="PublishAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedAt" class="control-label"></label>
-                <input asp-for="CreatedAt" class="form-control" />
-                <span asp-validation-for="CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdatedAt" class="control-label"></label>
-                <input asp-for="UpdatedAt" class="form-control" />
-                <span asp-validation-for="UpdatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+	<h1>Create</h1>
+
+	<h4>Product</h4>
+	<hr />
+	<div class="row">
+		<div class="col-md-4">
+			<form asp-action="Create" enctype="multipart/form-data">
+				<div asp-validation-summary="All" class="text-danger"></div>
+				<div class="form-group">
+					<label asp-for="Name" class="control-label"></label>
+					<input asp-for="Name" class="form-control" />
+					<span asp-validation-for="Name" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Description" class="control-label"></label>
+					<input asp-for="Description" class="form-control" />
+					<span asp-validation-for="Description" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Price" class="control-label"></label>
+					<input asp-for="Price" class="form-control" />
+					<span asp-validation-for="Price" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Stock" class="control-label"></label>
+					<input asp-for="Stock" class="form-control" />
+					<span asp-validation-for="Stock" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Slug" class="control-label"></label>
+					<input asp-for="Slug" class="form-control" />
+					<span asp-validation-for="Slug" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="PublishAt" class="control-label"></label>
+					<input asp-for="PublishAt" class="form-control" />
+					<span asp-validation-for="PublishAt" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="CreatedAt" class="control-label"></label>
+					<input asp-for="CreatedAt" class="form-control" />
+					<span asp-validation-for="CreatedAt" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="UpdatedAt" class="control-label"></label>
+					<input asp-for="UpdatedAt" class="form-control" />
+					<span asp-validation-for="UpdatedAt" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<div class="row flex-nowrap">
+						<div class="column">
+							<div>
+								<img id="output1" src="/img/product/details/thumb-4.jpg" alt="">
+
+							</div>
+							<input asp-for="ProductImages" accept="image/*" onchange="document.getElementById('output1').src = window.URL.createObjectURL(this.files[0])" id="fileInput" type="file">
+
+						</div>
+						<div class="column">
+							<div>
+								<img id="output2" src="/img/product/details/thumb-4.jpg" alt="">
+
+							</div>
+							<input asp-for="ProductImages" accept="image/*" onchange="document.getElementById('output2').src = window.URL.createObjectURL(this.files[0])" id="fileInput" type="file">
+
+						</div>
+						<div class="column">
+							<div>
+								<img id="output3" src="/img/product/details/thumb-4.jpg" alt="">
+
+							</div>
+							<input asp-for="ProductImages" accept="image/*" onchange="document.getElementById('output3').src = window.URL.createObjectURL(this.files[0])" id="fileInput" type="file">
+
+						</div>
+
+						<div class="column">
+							<div>
+								<img class="img-fluid" id="output4" src="/img/product/details/thumb-4.jpg" alt="">
+
+							</div>
+							<input asp-for="ProductImages" accept="image/*" onchange="document.getElementById('output4').src = window.URL.createObjectURL(this.files[0])" id="fileInput" type="file">
+
+						</div>
+
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Create" class="btn btn-primary" />
+				</div>
+			</form>
+		</div>
+	</div>
+
 </div>
 
 
-<div class="container tm-mt-big tm-mb-big">
-      <div class="row">
-        <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
-          <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
-            <div class="row">
-              <div class="col-12">
-                <h2 class="tm-block-title d-inline-block">Add Product</h2>
-              </div>
-            </div>
-            <div class="row tm-edit-product-row">
-              <div class="col-xl-6 col-lg-6 col-md-12">
-               <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                  <div class="form-group mb-3">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                  </div>
-                  <div class="form-group mb-3">
-                    <label asp-for="Description" class="control-label"></label>
-                    <input asp-for="Description" class="form-control" />
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                  </div>
-                  <div class="form-group mb-3">
-                    <label for="category">Category</label>
-                    <select class="custom-select tm-select-accounts" id="category">
-                      <option selected="">Select category</option>
-                      <option value="1">New Arrival</option>
-                      <option value="2">Most Popular</option>
-                      <option value="3">Trending</option>
-                    </select>
-                  </div>
-                  <div class="row">
-                      <div class="form-group mb-3 col-xs-12 col-sm-6">
-                          <label for="expire_date">Expire Date
-                          </label>
-                          <input id="expire_date" name="expire_date" type="text" class="form-control validate hasDatepicker" data-large-mode="true">
-                        </div>
-                        <div class="form-group mb-3 col-xs-12 col-sm-6">
-                          <label for="stock">Units In Stock
-                          </label>
-                          <input id="stock" name="stock" type="text" class="form-control validate" required="">
-                        </div>
-                  </div>
-                  
-              </form></div>
-              <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
-                <div class="tm-product-img-dummy mx-auto">
-                  <i class="fas fa-cloud-upload-alt tm-upload-icon" onclick="document.getElementById('fileInput').click();"></i>
-                </div>
-                <div class="custom-file mt-3 mb-3">
-                  <input id="fileInput" type="file" style="display:none;">
-                  <input type="button" class="btn btn-primary btn-block mx-auto" value="UPLOAD PRODUCT IMAGE" onclick="document.getElementById('fileInput').click();">
-                </div>
-              </div>
-              <div class="col-12">
-                <button type="submit" class="btn btn-primary btn-block text-uppercase">Add Product Now</button>
-              </div>
-            
-            </div>
-          </div>
-        </div>
-      </div>
-      <div>
-        <a asp-action="Index">Back to List</a>
-      </div>
 
-        @section Scripts {
-            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-        }
-    </div>

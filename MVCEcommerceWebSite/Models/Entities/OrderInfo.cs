@@ -12,6 +12,5 @@ namespace MVCEcommerceWebSite.Data
         public long AddressId { get; set; }
         public Address Address { get; set; }
         public string TrackingNumber { get; set; }
-/*        public ShippingStatus ShippingStatus { get; set; }
-*/    }
+    }
 }
