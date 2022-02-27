@@ -19,12 +19,14 @@ namespace MVCEcommerceWebSite.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IService<Product> productService;
+        private readonly IService<Category> categoryService;
         private readonly IWebHostEnvironment hostingEnvironment;
 
-        public ProductsController(ApplicationDbContext context,IService<Product> ProductService, IWebHostEnvironment hostingEnvironment)
+        public ProductsController(ApplicationDbContext context,IService<Product> ProductService, IService<Category> CategoryService, IWebHostEnvironment hostingEnvironment)
         {
             _context = context;
             productService = ProductService;
+            categoryService = CategoryService;
             this.hostingEnvironment = hostingEnvironment;
         }
 
@@ -144,12 +146,15 @@ namespace MVCEcommerceWebSite.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
+            ViewBag.Categories = new SelectList(categoryService.GetAll(), "Id", "Name");
             return View();
         }
         // new product
         [HttpPost]
         public async Task<IActionResult> Create(Product ProductVM)
         {
+            ViewBag.Categories = new SelectList(categoryService.GetAll(), "Id", "Name");
+
             //...
             string webRootPath = hostingEnvironment.WebRootPath;
             var files = HttpContext.Request.Form.Files;
@@ -165,12 +170,7 @@ namespace MVCEcommerceWebSite.Controllers
                 return View(ProductVM);
             }
 
-            var newproduct = new Product
-            {
-                Name = ProductVM.Name,
-                Description = ProductVM.Description,
-                ProductImages = new List<ProductImage> { }
-            };
+            
 
            
 
@@ -188,31 +188,13 @@ namespace MVCEcommerceWebSite.Controllers
                     }
 
                     //add product Image for new product
-                    newproduct.ProductImages.Add(new ProductImage { FileName = dynamicFileName });
+                    ProductVM.ProductImages.Add(new ProductImage { FileName = dynamicFileName });
                 }
             }
-
-
-            /*await _db.Product.AddAsync(newproduct);
-            await _db.SaveChangesAsync();*/
-            productService.Add(newproduct);
+            
+            productService.Add(ProductVM);
             return RedirectToAction(nameof(Index));
         }
-        /*private string UploadedFile(ProductViewModel model)  
-        {  
-            string uniqueFileName = null;  
-  
-            if (model.ProfileImage != null)  
-            {  
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images");  
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ProfileImage.FileName;  
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);  
-                using (var fileStream = new FileStream(filePath, FileMode.Create))  
-                {  
-                    model.ProfileImage.CopyTo(fileStream);  
-                }  
-            }  
-            return uniqueFileName;  
-        }*/
+       
     }
 }

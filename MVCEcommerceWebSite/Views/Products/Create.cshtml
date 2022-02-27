@@ -35,8 +35,9 @@
 					<input asp-for="Stock" class="form-control" />
 					<span asp-validation-for="Stock" class="text-danger"></span>
 				</div>
-				
-				
+
+				<select asp-for="CategoryId" asp-items="ViewBag.Categories">
+				</select>
 				<div class="form-group">
 					<div class="row flex-nowrap">
 						<div class="column">
