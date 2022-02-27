@@ -4,35 +4,22 @@ using MVCEcommerceWebSite.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MVCEcommerceWebSite.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220227194437_dbv8")]
+    partial class dbv8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.14")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("ColorsProduct", b =>
-                {
-                    b.Property<int>("ColorsId")
-                        .HasColumnType("int");
-
-                    b.Property<long>("ProductsId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("ColorsId", "ProductsId");
-
-                    b.HasIndex("ProductsId");
-
-                    b.ToTable("ColorsProduct");
-                });
 
             modelBuilder.Entity("MVCEcommerceWebSite.Data.Address", b =>
                 {
@@ -242,6 +229,9 @@ namespace MVCEcommerceWebSite.Data.Migrations
                     b.Property<long>("CategoryId")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("ColorId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -257,6 +247,8 @@ namespace MVCEcommerceWebSite.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("ColorId");
 
                     b.ToTable("Products");
                 });
@@ -488,21 +480,6 @@ namespace MVCEcommerceWebSite.Data.Migrations
                     b.HasDiscriminator().HasValue("ProductImage");
                 });
 
-            modelBuilder.Entity("ColorsProduct", b =>
-                {
-                    b.HasOne("MVCEcommerceWebSite.Models.Entities.Colors", null)
-                        .WithMany()
-                        .HasForeignKey("ColorsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MVCEcommerceWebSite.Data.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("MVCEcommerceWebSite.Data.Address", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
@@ -585,7 +562,13 @@ namespace MVCEcommerceWebSite.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("MVCEcommerceWebSite.Models.Entities.Colors", "Color")
+                        .WithMany("Products")
+                        .HasForeignKey("ColorId");
+
                     b.Navigation("Category");
+
+                    b.Navigation("Color");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -670,6 +653,11 @@ namespace MVCEcommerceWebSite.Data.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("ProductImages");
+                });
+
+            modelBuilder.Entity("MVCEcommerceWebSite.Models.Entities.Colors", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

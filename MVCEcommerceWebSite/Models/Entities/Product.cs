@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc;
+using MVCEcommerceWebSite.Models.Entities;
 
 namespace MVCEcommerceWebSite.Data
 {
@@ -20,11 +21,11 @@ namespace MVCEcommerceWebSite.Data
         public long CategoryId { get; set; }
         [NotMapped] 
         public int CommentsCount { get; set; }
-        
-        public ICollection<ProductImage> ProductImages { get; set; }
+        public virtual ICollection<Colors> Colors { get; set; }
+        public virtual ICollection<ProductImage> ProductImages { get; set; }
         public virtual Category Category { get; set; }
         
-        public Collection<Comment> Comments { get; set; }
+        public virtual Collection<Comment> Comments { get; set; }
 
     }
 }

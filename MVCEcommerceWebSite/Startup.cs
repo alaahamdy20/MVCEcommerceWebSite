@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MVCEcommerceWebSite.Data;
+using MVCEcommerceWebSite.Models.Entities;
 using MVCEcommerceWebSite.Services;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,7 @@ namespace MVCEcommerceWebSite
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddScoped<IService<Product>, ProductsService>();
             services.AddScoped<IService<Category>, CategoriesService>();
+            services.AddScoped<IService<Colors>, ColorsService>();
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();

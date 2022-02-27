@@ -1,25 +1,26 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using MVCEcommerceWebSite.Data;
+using MVCEcommerceWebSite.Models.Entities;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace MVCEcommerceWebSite.Services
 {
     
-    public class ProductsService:IService<Product>
+    public class ColorsService: IService<Colors>
     {
         private readonly ApplicationDbContext dbContext;
         private readonly IWebHostEnvironment webHostEnvironment;
 
-        public ProductsService(ApplicationDbContext dbContext, IWebHostEnvironment hostEnvironment)
+        public ColorsService(ApplicationDbContext dbContext, IWebHostEnvironment hostEnvironment)
         {
             this.dbContext = dbContext;
             webHostEnvironment = hostEnvironment;
 
         }
 
-        public int Add(Product newObjectOfT)
+        public int Add(Colors newObjectOfT)
         {
             dbContext.Add(newObjectOfT);
             return dbContext.SaveChanges();
@@ -31,30 +32,27 @@ namespace MVCEcommerceWebSite.Services
             return dbContext.SaveChanges();
         }
 
-        public List<Product> GetAll()
+        public List<Colors> GetAll()
         {
-            return dbContext.Products.ToList();
+            return dbContext.Colors.ToList();
         }
 
-        public Product GetById(long id)
+        public Colors GetById(long id)
         {
              
-            return dbContext.Products.FirstOrDefault(p => p.Id == id);
+            return dbContext.Colors.FirstOrDefault(p => p.Id == id);
         }
 
-        public Product GetByName(string name)
+        public Colors GetByName(string name)
         {
-            return dbContext.Products.FirstOrDefault(p => p.Name == name);
+            return dbContext.Colors.FirstOrDefault(p => p.Color == name);
         }
 
-        public int Update(long id, Product newObjectOfT)
+        public int Update(long id, Colors newObjectOfT)
         {
-            Product p =  GetById(id);
-            p.Name = newObjectOfT.Name;
-            p.Price = newObjectOfT.Price;
-            p.Description = newObjectOfT.Description;
-            p.Stock = newObjectOfT.Stock;
-            p.ProductImages = newObjectOfT.ProductImages;
+            Colors p =  GetById(id);
+            p.Color = newObjectOfT.Color;
+            
             return dbContext.SaveChanges();
         }
         

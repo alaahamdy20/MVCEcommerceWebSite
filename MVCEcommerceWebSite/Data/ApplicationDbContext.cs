@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MVCEcommerceWebSite.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,8 +13,12 @@ namespace MVCEcommerceWebSite.Data
             : base(options)
         {
         }
-       
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+        }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Colors> Colors { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderItem> OrderItems { get; set; }

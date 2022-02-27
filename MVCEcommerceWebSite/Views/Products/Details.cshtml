@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int i = 1;
 }
 
 <!-- Breadcrumb Begin -->
@@ -30,31 +31,19 @@
                         <div class="product__details__pic__left product__thumb nice-scroll">
                             @foreach (var item in Model.ProductImages)
                             {
-                               <a class="pt active" href="#product-1">
+                               <a class="pt" href="#product-@(i++)">
                                 <img src="@item.FilePath" alt="">
                                </a> 
-                            }
-                            
-                            @*<a class="pt" href="#product-2">
-                                <img src="img/product/details/thumb-2.jpg" alt="">
-                            </a>
-                            <a class="pt" href="#product-3">
-                                <img src="img/product/details/thumb-3.jpg" alt="">
-                            </a>
-                            <a class="pt" href="#product-4">
-                                <img src="img/product/details/thumb-4.jpg" alt="">
-                            </a>*@
+                            }  
                         </div>
+                            <span hidden>@(i=1)</span>
+                        
                         <div class="product__details__slider__content">
                             <div class="product__details__pic__slider owl-carousel">
                                 @foreach (var item in Model.ProductImages)
-                            {
-                               <img data-hash="product-1" class="product__big__img" src="@item.FilePath" alt="">
-
-                            }
-@*                                <img data-hash="product-2" class="product__big__img" src="img/product/details/product-3.jpg" alt="">
-                                <img data-hash="product-3" class="product__big__img" src="img/product/details/product-2.jpg" alt="">
-                                <img data-hash="product-4" class="product__big__img" src="img/product/details/product-4.jpg" alt="">*@
+                                {
+                                   <img data-hash="product-@(i++)" class="product__big__img" src="@item.FilePath" alt="">
+                                }
                             </div>
                         </div>
                     </div>

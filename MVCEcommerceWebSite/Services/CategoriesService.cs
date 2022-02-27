@@ -19,7 +19,7 @@ namespace MVCEcommerceWebSite.Services
             return dbContext.SaveChanges();
         }
 
-        public int Delete(int id)
+        public int Delete(long id)
         {
             dbContext.Remove(GetById(id));
             return dbContext.SaveChanges();
@@ -30,7 +30,7 @@ namespace MVCEcommerceWebSite.Services
             return dbContext.Categories.ToList();
         }
 
-        public Category GetById(int id)
+        public Category GetById(long id)
         {
 
             return dbContext.Categories.FirstOrDefault(p => p.Id == id);
@@ -41,7 +41,7 @@ namespace MVCEcommerceWebSite.Services
             return dbContext.Categories.FirstOrDefault(p => p.Name == name);
         }
 
-        public int Update(int id, Category newObjectOfT)
+        public int Update(long id, Category newObjectOfT)
         {
             Category p = GetById(id);
             p.Name = newObjectOfT.Name;

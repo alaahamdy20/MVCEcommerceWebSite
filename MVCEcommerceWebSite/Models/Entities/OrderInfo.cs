@@ -10,7 +10,7 @@ namespace MVCEcommerceWebSite.Data
         public long Id { get; set; }
         [ForeignKey("Address")]
         public long AddressId { get; set; }
-        public Address Address { get; set; }
+        public virtual Address Address { get; set; }
         public string TrackingNumber { get; set; }
     }
 }

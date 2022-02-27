@@ -5,7 +5,7 @@ namespace MVCEcommerceWebSite.Data
     public class ProductImage : FileUpload
     {
         // Uploader
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
         [ForeignKey("Product")]
         public virtual long ProductId { get; set; }
     }

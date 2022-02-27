@@ -32,8 +32,8 @@ namespace MVCEcommerceWebSite.Data
             throw new NotImplementedException();
         }
 
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
         public virtual HashSet<Comment> Replies { get; set; }
-        public IdentityUser User { get; set; }
+        public virtual IdentityUser User { get; set; }
     }
 }

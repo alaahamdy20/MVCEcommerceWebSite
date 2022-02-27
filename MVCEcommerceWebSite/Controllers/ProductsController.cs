@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MVCEcommerceWebSite.Data;
+using MVCEcommerceWebSite.Models.Entities;
 using MVCEcommerceWebSite.Services;
 using MVCEcommerceWebSite.ViewModel;
 
@@ -20,22 +21,28 @@ namespace MVCEcommerceWebSite.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IService<Product> productService;
         private readonly IService<Category> categoryService;
+        private readonly IService<Colors> colorsService;
         private readonly IWebHostEnvironment hostingEnvironment;
 
-        public ProductsController(ApplicationDbContext context,IService<Product> ProductService, IService<Category> CategoryService, IWebHostEnvironment hostingEnvironment)
+        public ProductsController(ApplicationDbContext context,IService<Product> ProductService, IService<Category> CategoryService, IService<Colors> ColorsService, IWebHostEnvironment hostingEnvironment)
         {
             _context = context;
             productService = ProductService;
             categoryService = CategoryService;
+            colorsService = ColorsService;
             this.hostingEnvironment = hostingEnvironment;
         }
 
+        #region Get Products
         // GET: Products
         [AllowAnonymous]
         public IActionResult Index()
         {
             return View(productService.GetAll());
         }
+        #endregion 
+
+        #region Get Details Of ProductById
 
         // GET: Products/Details/5
         [AllowAnonymous]
@@ -46,8 +53,7 @@ namespace MVCEcommerceWebSite.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Products
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var product = productService.GetById(id.Value);
             if (product == null)
             {
                 return NotFound();
@@ -55,7 +61,10 @@ namespace MVCEcommerceWebSite.Controllers
 
             return View(product);
         }
-       
+        #endregion 
+
+        #region Edit Product By Id
+
 
 
 
@@ -74,6 +83,7 @@ namespace MVCEcommerceWebSite.Controllers
             }
             return View(product);
         }
+         
 
         // POST: Products/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -109,6 +119,9 @@ namespace MVCEcommerceWebSite.Controllers
             }
             return View(product);
         }
+        #endregion
+
+        #region Delete Products
 
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(long? id)
@@ -143,17 +156,23 @@ namespace MVCEcommerceWebSite.Controllers
         {
             return _context.Products.Any(e => e.Id == id);
         }
+        #endregion
+
+        #region Create Product
         // GET: Products/Create
         public IActionResult Create()
         {
+
+            ViewBag.Colors = new SelectList(colorsService.GetAll(), "Id", "Color");
             ViewBag.Categories = new SelectList(categoryService.GetAll(), "Id", "Name");
             return View();
         }
         // new product
         [HttpPost]
-        public async Task<IActionResult> Create(Product ProductVM)
+        public async Task<IActionResult> Create(Product ProductVM,Colors[] colors)
         {
             ViewBag.Categories = new SelectList(categoryService.GetAll(), "Id", "Name");
+            ViewBag.Colors = new SelectList(colorsService.GetAll(), "Id", "Color");
 
             //...
             string webRootPath = hostingEnvironment.WebRootPath;
@@ -188,13 +207,18 @@ namespace MVCEcommerceWebSite.Controllers
                     }
 
                     //add product Image for new product
-                    ProductVM.ProductImages.Add(new ProductImage { FileName = dynamicFileName });
+                    ProductVM.ProductImages.Add(new ProductImage { FileName = dynamicFileName,FilePath= $"/images/{dynamicFileName}" });
                 }
             }
-            
+            foreach (var item in colors)
+            {
+                ProductVM.Colors.Add(new Colors { Id = item.Id, Color = item.Color });
+
+            }
             productService.Add(ProductVM);
             return RedirectToAction(nameof(Index));
         }
-       
+
+        #endregion
     }
 }

@@ -8,11 +8,11 @@ namespace MVCEcommerceWebSite.Services
 
         
         int Add(T newObjectOfT);
-        int Delete(int id);
+        int Delete(long id);
         List<T> GetAll();
-        T GetById(int id);
+        T GetById(long id);
         T GetByName(string name);
-        int Update(int id, T newObjectOfT);
+        int Update(long id, T newObjectOfT);
 
 
     }
