@@ -48,6 +48,7 @@ namespace MVCEcommerceWebSite.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Details(long? id)
         {
+            ViewData["categories"] = categoryService.GetAll();
             if (id == null)
             {
                 return NotFound();
@@ -169,7 +170,7 @@ namespace MVCEcommerceWebSite.Controllers
         }
         // new product
         [HttpPost]
-        public async Task<IActionResult> Create(Product ProductVM,Colors[] colors)
+        public async Task<IActionResult> Create(Product ProductVM,int[] SelectedIds)
         {
             ViewBag.Categories = new SelectList(categoryService.GetAll(), "Id", "Name");
             ViewBag.Colors = new SelectList(colorsService.GetAll(), "Id", "Color");
@@ -210,11 +211,17 @@ namespace MVCEcommerceWebSite.Controllers
                     ProductVM.ProductImages.Add(new ProductImage { FileName = dynamicFileName,FilePath= $"/images/{dynamicFileName}" });
                 }
             }
-            foreach (var item in colors)
-            {
-                ProductVM.Colors.Add(new Colors { Id = item.Id, Color = item.Color });
 
+            List<Colors> ColorsNew = new List<Colors>();
+            foreach (var colorId in SelectedIds)
+            {
+                //Colors color = new Colors();
+                //colorsService.Add(colorsService.GetById(colorId));
+                ColorsNew.Add(colorsService.GetById(colorId));
             }
+            
+            ProductVM.Colors = ColorsNew;
+
             productService.Add(ProductVM);
             return RedirectToAction(nameof(Index));
         }

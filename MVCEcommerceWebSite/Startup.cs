@@ -36,7 +36,9 @@ namespace MVCEcommerceWebSite
             services.AddScoped<IService<Product>, ProductsService>();
             services.AddScoped<IService<Category>, CategoriesService>();
             services.AddScoped<IService<Colors>, ColorsService>();
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(
+                
+                )
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
         }

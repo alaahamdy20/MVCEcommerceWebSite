@@ -42,15 +42,14 @@
 
 				@*<select asp-for="ColorId" asp-items="ViewBag.Colors">
 				</select>*@
-				@foreach (var item in ViewBag.Colors)
+			@foreach (var item in ViewBag.Colors)
 				{
-					<input name="colors.Color.Id" value="@item.Value" type="checkbox" />
-					<label >@item.Text</label>
-					<label hidden name="colors.Color.Color">@item.Text</label>
-@*					<label hidden name="Colors.Id">@item.Value</label>
-*@				   <br />
-				  
-				}
+				<input name="SelectedIds" value="@item.Value" type="checkbox" />
+				<label >@item.Text</label>
+				<label hidden name="colors.Color.Color">@item.Text</label>
+				<label hidden name="Colors.Id">@item.Value</label>
+				<br />
+}
 				<div class="form-group">
 					<div class="row flex-nowrap">
 						<div class="column">

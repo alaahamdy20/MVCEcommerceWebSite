@@ -12,8 +12,12 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb__links">
-                        <a href="./index.html"><i class="fa fa-home"></i> Home</a>
-                        <a href="#">@Model.Category.Name</a>
+                        <a asp-controller="Product" asp-action="Index"  ><i class="fa fa-home"></i> Home</a>
+                        @foreach (Category item in ViewBag.categories)
+                       {
+                            <a href="#"> @item.Name  </a>
+                       }
+                       
                         <span>@Model.Name</span>
                     </div>
                 </div>
@@ -29,7 +33,7 @@
                 <div class="col-lg-6">
                     <div class="product__details__pic">
                         <div class="product__details__pic__left product__thumb nice-scroll">
-                            @foreach (var item in Model.ProductImages)
+                            @foreach (ProductImage item in @Model.ProductImages)
                             {
                                <a class="pt" href="#product-@(i++)">
                                 <img src="@item.FilePath" alt="">
@@ -59,8 +63,11 @@
                             <i class="fa fa-star"></i>
                             <span>( 138 reviews )</span>
                         </div>
-                        <div class="product__details__price">$ 75.0 <span>$ 83.0</span></div>
-                        <p>Nemo enim ipsam voluptatem quia aspernatur aut odit aut loret fugit, sed quia consequuntur
+                    <div class="product__details__price">@Model.Price <span>$ @{
+                              int t=  @Model.Price + 20;
+                            }@t
+                            </span></div>
+                    <p>Nemo enim ipsam voluptatem quia aspernatur aut odit aut loret fugit, sed quia consequuntur
                         magni lores eos qui ratione voluptatem sequi nesciunt.</p>
                         <div class="product__details__button">
                             <div class="quantity">
@@ -90,18 +97,16 @@
                                 <li>
                                     <span>Available color:</span>
                                     <div class="color__checkbox">
-                                        <label for="red">
-                                            <input type="radio" name="color__radio" id="red" checked>
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label for="black">
-                                            <input type="radio" name="color__radio" id="black">
-                                            <span class="checkmark black-bg"></span>
-                                        </label>
-                                        <label for="grey">
-                                            <input type="radio" name="color__radio" id="grey">
-                                            <span class="checkmark grey-bg"></span>
-                                        </label>
+                                      
+                                        @foreach (var item in @Model.Colors)
+                                       {
+                                        <label for="@item.Color">
+                                            <input  type="radio" name="color__radio"  id="@item.Color" >
+                                            <span class="checkmark grey-bg" style=" background-color:@item.Color"></span>
+                                        </label> 
+
+                                       }
+
                                     </div>
                                 </li>
                                 <li>
