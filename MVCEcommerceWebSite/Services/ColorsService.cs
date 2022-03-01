@@ -8,7 +8,7 @@ using System.Linq;
 namespace MVCEcommerceWebSite.Services
 {
     
-    public class ColorsService: IService<Colors>
+    public class ColorsService: IColorsService
     {
         private readonly ApplicationDbContext dbContext;
         private readonly IWebHostEnvironment webHostEnvironment;
@@ -56,5 +56,6 @@ namespace MVCEcommerceWebSite.Services
             return dbContext.SaveChanges();
         }
         
+
     }
 }

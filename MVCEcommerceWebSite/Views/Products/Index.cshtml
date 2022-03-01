@@ -32,7 +32,17 @@
 						</div>
 						<div class="categories__accordion">
 							<div class="accordion" id="accordionExample">
-								<div class="card">
+								@foreach (var item in ViewBag.Categories)
+								{
+									<label for="@item.Text">
+									@item.Text
+									<input type="checkbox" name="selectedCategorys" id="@item.Text" value="@item.Value">
+									<span class="checkmark"></span>
+									</label>
+								}
+								<a onclick="shopByCategory()" class="myfliter">Filter</a>
+
+								@*<div class="card">
 									<div class="card-heading active">
 										<a data-toggle="collapse" data-target="#collapseOne">Women</a>
 									</div>
@@ -116,7 +126,7 @@
 											</ul>
 										</div>
 									</div>
-								</div>
+								</div>*@
 							</div>
 						</div>
 					</div>
@@ -126,16 +136,17 @@
 						</div>
 						<div class="filter-range-wrap">
 							<div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-								 data-min="33" data-max="99"></div>
+								 data-min="0" data-max="10000"></div>
 							<div class="range-slider">
 								<div class="price-input">
 									<p>Price:</p>
-									<input type="text" id="minamount">
-									<input type="text" id="maxamount">
+									<input style="max-width:60px" type="text" id="minamount">
+									<input style="max-width:60px" type="text" id="maxamount">
 								</div>
 							</div>
 						</div>
-						<a href="#">Filter</a>
+						<br />
+						<a onclick="shopByPrice()" class="myfliter" style="cursor:pointer;position:static;display:block">Filter</a>
 					</div>
 					<div class="sidebar__sizes">
 						<div class="section-title">
@@ -186,49 +197,21 @@
 					</div>
 					<div class="sidebar__color">
 						<div class="section-title">
-							<h4>Shop by size</h4>
+							<h4>Shop by Color</h4>
 						</div>
 						<div class="size__list color__list">
-							<label for="black">
-								Blacks
-								<input type="checkbox" id="black">
+							@foreach (var item in ViewBag.Colors)
+							{
+								<label for="@item.Text">
+								@item.Text
+								<input type="checkbox" name="selectedColors" id="@item.Text" value="@item.Value">
 								<span class="checkmark"></span>
-							</label>
-							<label for="whites">
-								Whites
-								<input type="checkbox" id="whites">
-								<span class="checkmark"></span>
-							</label>
-							<label for="reds">
-								Reds
-								<input type="checkbox" id="reds">
-								<span class="checkmark"></span>
-							</label>
-							<label for="greys">
-								Greys
-								<input type="checkbox" id="greys">
-								<span class="checkmark"></span>
-							</label>
-							<label for="blues">
-								Blues
-								<input type="checkbox" id="blues">
-								<span class="checkmark"></span>
-							</label>
-							<label for="beige">
-								Beige Tones
-								<input type="checkbox" id="beige">
-								<span class="checkmark"></span>
-							</label>
-							<label for="greens">
-								Greens
-								<input type="checkbox" id="greens">
-								<span class="checkmark"></span>
-							</label>
-							<label for="yellows">
-								Yellows
-								<input type="checkbox" id="yellows">
-								<span class="checkmark"></span>
-							</label>
+								</label>
+							
+							}
+							<a onclick="shopByColor()" class="myfliter">Filter</a>
+
+							
 						</div>
 					</div>
 				</div>
@@ -237,33 +220,10 @@
 			<!-- Start Product List -->
 
 			<div class="col-lg-9 col-md-9">
-				<div class="row">
+				<div id="con" class="row">
 					<!-- Start Product Card -->
-					@foreach (var item in Model)
-					{
-						<div class="col-lg-4 col-md-6">
-							<div class="product__item">
-								<div class="product__item__pic set-bg" data-setbg="@item.ProductImages.FirstOrDefault().FilePath">
-									<ul class="product__hover">
-										<li><a href="@item.ProductImages.FirstOrDefault().FilePath" class="image-popup"><span class="arrow_expand"></span></a></li>
-										<li><a href="#"><span class="icon_heart_alt"></span></a></li>
-										<li><a asp-action="Details" asp-route-id="@item.Id"><span class="icon_bag_alt"></span></a></li>
-									</ul>
-								</div>
-								<div class="product__item__text">
-									<h6><a href="#">@item.Name</a></h6>
-									<div class="rating">
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-										<i class="fa fa-star"></i>
-									</div>
-									<div class="product__price">$ @item.Price</div>
-								</div>
-							</div>
-						</div>
-					}
+					
+					<partial name="ShopByColors"></partial>
 					<!-- Start Product Card -->
 
 
@@ -275,3 +235,79 @@
 	</div>
 </section>
 <!-- Shop Section End -->
+
+
+<script type="text/javascript">
+	function shopByCategory(){
+
+		var Categories = [];
+
+		// Initializing array with Checkbox checked values
+		$("input[name='selectedCategorys']:checked").each(function(){
+			Categories.push(this.value);
+		});
+
+            $.ajax({
+                type: "POST",
+                url: "/Products/ShopByCategory",
+                data:  {Categorys:Categories},
+                success: function (response) {
+					$("#con").html(response);
+                    //alert(response);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+	}
+	function shopByPrice(){
+	var Colors = [];
+
+		
+			var minamount = $("#minamount").val().substring(1);
+			var maxamount = $("#maxamount").val().substring(1);
+            $.ajax({
+                type: "POST",
+                url: "/Products/ShopByPrice",
+                data:  {"min":minamount,"max":maxamount},
+                success: function (response) {
+					$("#con").html(response);
+                    //alert(response);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+	}
+    function shopByColor() {
+		var Colors = [];
+
+		// Initializing array with Checkbox checked values
+		$("input[name='selectedColors']:checked").each(function(){
+			Colors.push(this.value);
+		});
+
+			//alert("clicked")
+            $.ajax({
+                type: "POST",
+                url: "/Products/ShopByColors",
+                data:  ({selectedColors : Colors }),
+                success: function (response) {
+					$("#con").html(response);
+                    //alert(response);
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        }
+    </script>

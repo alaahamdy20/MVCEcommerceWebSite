@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MVCEcommerceWebSite.Services
 {
-    public class CategoriesService : IService<Category>
+    public class CategoriesService : ICategoriesService
     {
         private readonly ApplicationDbContext dbContext;
 

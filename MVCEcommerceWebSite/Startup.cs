@@ -33,9 +33,9 @@ namespace MVCEcommerceWebSite
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddScoped<IService<Product>, ProductsService>();
-            services.AddScoped<IService<Category>, CategoriesService>();
-            services.AddScoped<IService<Colors>, ColorsService>();
+            services.AddScoped<IProductService, ProductsService>();
+            services.AddScoped<ICategoriesService, CategoriesService>();
+            services.AddScoped<IColorsService, ColorsService>();
             services.AddDefaultIdentity<IdentityUser>(
                 
                 )

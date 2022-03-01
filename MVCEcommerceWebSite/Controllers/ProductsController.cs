@@ -19,12 +19,12 @@ namespace MVCEcommerceWebSite.Controllers
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IService<Product> productService;
-        private readonly IService<Category> categoryService;
-        private readonly IService<Colors> colorsService;
+        private readonly IProductService productService;
+        private readonly ICategoriesService categoryService;
+        private readonly IColorsService colorsService;
         private readonly IWebHostEnvironment hostingEnvironment;
 
-        public ProductsController(ApplicationDbContext context,IService<Product> ProductService, IService<Category> CategoryService, IService<Colors> ColorsService, IWebHostEnvironment hostingEnvironment)
+        public ProductsController(ApplicationDbContext context,IProductService ProductService, ICategoriesService CategoryService, IColorsService ColorsService, IWebHostEnvironment hostingEnvironment)
         {
             _context = context;
             productService = ProductService;
@@ -38,6 +38,9 @@ namespace MVCEcommerceWebSite.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
+            ViewBag.Colors = new SelectList(colorsService.GetAll(), "Id", "Color");
+            ViewBag.Categories = new SelectList(categoryService.GetAll(), "Id", "Name");
+
             return View(productService.GetAll());
         }
         #endregion 
@@ -227,5 +230,30 @@ namespace MVCEcommerceWebSite.Controllers
         }
 
         #endregion
+
+        #region Ajax
+        [HttpPost]
+        public IActionResult ShopByColors(int[] selectedColors )
+        {
+            
+            return PartialView(productService.GetProductsByColors(selectedColors));
+        }
+        [HttpPost]
+        public IActionResult ShopByPrice(int min,int max)
+        {
+            return PartialView("ShopByColors", productService.GetProductsByPrice(min,max));
+
+        }
+        
+        public IActionResult ShopByCategory(int[] Categorys)
+        {
+            return PartialView("ShopByColors", productService.GetProductsByCategory(Categorys));
+
+        }
+
+
+
+        #endregion
+
     }
 }

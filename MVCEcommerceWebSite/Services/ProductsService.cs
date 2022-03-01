@@ -7,7 +7,7 @@ using System.Linq;
 namespace MVCEcommerceWebSite.Services
 {
     
-    public class ProductsService:IService<Product>
+    public class ProductsService:IProductService
     {
         private readonly ApplicationDbContext dbContext;
         private readonly IWebHostEnvironment webHostEnvironment;
@@ -19,9 +19,9 @@ namespace MVCEcommerceWebSite.Services
 
         }
 
-        public int Add(Product newObjectOfT)
+        public int Add(Product newObjectOfProduct)
         {
-            dbContext.Add(newObjectOfT);
+            dbContext.Add(newObjectOfProduct);
             return dbContext.SaveChanges();
         }
 
@@ -57,6 +57,31 @@ namespace MVCEcommerceWebSite.Services
             p.ProductImages = newObjectOfT.ProductImages;
             return dbContext.SaveChanges();
         }
-        
+
+        public List<Product> GetProductsByColors(int[] colors)
+        {
+            List<Product> products = new List<Product>();
+            foreach (var item in colors)
+            {
+                products.AddRange(dbContext.Colors.FirstOrDefault(c => c.Id == item).Products);
+            }
+
+            return products;
+        }
+        public List<Product> GetProductsByPrice(int min, int max)
+        {
+            return dbContext.Products.Where(p=>p.Price >= min && p.Price <= max).ToList();
+        }
+
+        public List<Product> GetProductsByCategory(int[] Categorys)
+        {
+            List<Product> products = new List<Product>();
+            foreach (var item in Categorys)
+            {
+                products.AddRange(dbContext.Categories.FirstOrDefault(c => c.Id == item).Products);
+            }
+
+            return products;
+        }
     }
 }
