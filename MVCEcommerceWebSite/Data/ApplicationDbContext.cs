@@ -27,6 +27,8 @@ namespace MVCEcommerceWebSite.Data
         public virtual DbSet<Address> Addresses { get; set; }
 
         public virtual DbSet<FileUpload> FileUploads { get; set; }
+        public virtual DbSet<ShoppingSession> ShoppingSessions { get; set; }
+        public virtual DbSet<CartItem> CartItems { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
