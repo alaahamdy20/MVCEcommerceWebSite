@@ -195,14 +195,14 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            @* <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="related__title">
                         <h5>RELATED PRODUCTS</h5>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-4 col-sm-6">
-                    <div class="product__item">
+                   <div class="product__item">
                         <div class="product__item__pic set-bg" data-setbg="img/product/related/rp-1.jpg">
                             <div class="label new">New</div>
                             <ul class="product__hover">
@@ -290,8 +290,20 @@
                             <div class="product__price">$ 59.0</div>
                         </div>
                     </div>
-                </div>
+                     </div>
+                </div>*@
+              
+                	<div class="col-lg-12 col-md-12">
+				<div id="con" class="row">
+					<!-- Start Product Card -->
+					
+					<partial name="ShopByColors"model="@ViewBag.fourProduct" style="width=25%!important"></partial>
+					<!-- Start Product Card -->
+
+
+				</div>
+			</div>
             </div>
-        </div>
+       
     </section>
     <!-- Product Details Section End -->

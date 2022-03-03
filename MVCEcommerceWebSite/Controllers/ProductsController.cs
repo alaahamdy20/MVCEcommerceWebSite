@@ -62,7 +62,7 @@ namespace MVCEcommerceWebSite.Controllers
             {
                 return NotFound();
             }
-
+            ViewData["fourProduct"]= productService.GetAll().Take(4).ToList();
             return View(product);
         }
         #endregion 
@@ -247,6 +247,9 @@ namespace MVCEcommerceWebSite.Controllers
         
         public IActionResult ShopByCategory(int[] Categorys)
         {
+            if (Categorys.Length==1 && Categorys[0]==0 ) {
+                return PartialView("ShopByColors", productService.GetAll());
+            }
             return PartialView("ShopByColors", productService.GetProductsByCategory(Categorys));
 
         }
