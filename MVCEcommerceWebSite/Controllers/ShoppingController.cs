@@ -15,13 +15,24 @@ namespace MVCEcommerceWebSite.Controllers
         public ShoppingController(IProductService ProductService)
         {
             productService = ProductService;
+
+
         }
-		[Route("index")]
+        [Route("index")]
         public IActionResult Index()
         {
             var cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
+            if (cart != null)
+            {
+                ViewBag.total = cart.Sum(item => item.Product.Price * item.Quantity);
+            }
+            else
+            {
+                cart = new List<CartItem>();
+
+            }
             ViewBag.cart = cart;
-            ViewBag.total = cart.Sum(item => item.Product.Price * item.Quantity);
+
             return View();
         }
 
@@ -53,13 +64,16 @@ namespace MVCEcommerceWebSite.Controllers
         }
 
         [Route("remove/{id}")]
+        [HttpPost]
         public IActionResult Remove(int id)
         {
             List<CartItem> cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
             int index = isExist(id);
             cart.RemoveAt(index);
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-            return RedirectToAction("Index");
+            ViewBag.cart = cart;
+            ViewBag.total = cart.Sum(item => item.Product.Price * item.Quantity);
+            return PartialView("_CartItem");
         }
 
         private int isExist(long id)
@@ -74,5 +88,8 @@ namespace MVCEcommerceWebSite.Controllers
             }
             return -1;
         }
-	}
+
+
+    
+    }
 }

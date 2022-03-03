@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
@@ -24,7 +25,6 @@ namespace MVCEcommerceWebSite.Data
         public virtual ICollection<Colors> Colors { get; set; }
         public virtual ICollection<ProductImage> ProductImages { get; set; }
         public virtual Category Category { get; set; }
-        
         public virtual Collection<Comment> Comments { get; set; }
 
     }
