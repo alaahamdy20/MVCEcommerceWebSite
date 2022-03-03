@@ -1,6 +1,19 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿@using MVCEcommerceWebSite.Helpers
+@using MVCEcommerceWebSite.Models.Entities
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContextAccessor.HttpContext.Session, "cart");
+    int items = 0;
+    @if(cart !=null){
+                       items = cart.Count;
+                    }
+                    
+    //var value = HttpContextAccessor.HttpContext.Session.GetString("cart");
+}
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -115,7 +128,9 @@
                                 <div class="tip">2</div>
                             </a></li>
                             <li><a asp-controller="shopping" asp-action="index"><span class="icon_cart_alt"></span>
-                                <div class="tip">2</div>
+                                <div class="tip">
+                                    @items
+                                    </div>
                             </a></li>
                         </ul>
                     </div>

@@ -12,7 +12,7 @@
 										
 										<li><a href="@item.ProductImages.FirstOrDefault().FilePath" class="image-popup"><span class="arrow_expand"></span></a></li>
 										<li><a asp-action="Details" asp-route-id="@item.Id"><span class="icon_bag_alt"></span></a></li>
-										<li><a asp-controller="shopping" asp-action="buy" asp-route-id="@item.Id"><span class="icon_cart_alt"></span></a></li>
+										<li><a onclick="AddToCart(@item.Id)"><span class="icon_cart_alt"></span></a></li>
 									</ul>
 								</div>
 								<div class="product__item__text">

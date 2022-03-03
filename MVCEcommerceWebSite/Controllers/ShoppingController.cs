@@ -8,8 +8,8 @@ using System.Linq;
 
 namespace MVCEcommerceWebSite.Controllers
 {
-	public class ShoppingController : Controller
-	{
+    public class ShoppingController : Controller
+    {
         private readonly IProductService productService;
 
         public ShoppingController(IProductService ProductService)
@@ -89,7 +89,33 @@ namespace MVCEcommerceWebSite.Controllers
             return -1;
         }
 
+        public IActionResult AddToQuantity(long id)
+        {
 
-    
+            List<CartItem> cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
+            int index = isExist(id);
+                if (index != -1)
+                {
+                    cart[index].Quantity++;
+                }
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+
+            return Ok();
+        }
+        public IActionResult MinToQuantity(long id)
+        {
+
+            List<CartItem> cart = SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart");
+            int index = isExist(id);
+            if (index != -1)
+            {
+                cart[index].Quantity--;
+            }
+            SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+
+            return Ok();
+
+        }
+
     }
 }
