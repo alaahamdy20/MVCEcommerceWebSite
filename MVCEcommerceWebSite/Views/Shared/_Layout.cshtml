@@ -68,10 +68,8 @@
         <div class="offcanvas__close">+</div>
         <ul class="offcanvas__widget">
             <li><span class="icon_search search-switch"></span></li>
-            <li><a href="#"><span class="icon_heart_alt"></span>
-                <div class="tip">2</div>
-            </a></li>
-            <li><a href="#"><span class="icon_bag_alt"></span>
+            
+            <li><a href="#"><span class="icon_cart_alt"></span>
                 <div class="tip">2</div>
             </a></li>
         </ul>
@@ -84,7 +82,17 @@
         </div>
     </div>
     <!-- Offcanvas Menu End -->
+<div style="display:none;position:fixed;top:100px;right:50px;width:50%;z-index:1000000000" id="alerts">
+						<div id="alert"  style=" margin-left:50%" class="alert  w-50 alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
+							<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
+							<div class="mx-2">
+								Product success Added To Cart
+							</div>
+								<button type="button" onclick="removeAlert()" style="border-radius:50%;border:1px solid black"  class="btn  cart__close" data-bs-dismiss="alert" aria-label="Close">X</button>
 
+						</div>
+
+			</div>
     <!-- Header Section Begin -->
     <header class="header">
         <div class="container-fluid">
@@ -124,11 +132,9 @@
                         </div>
                         <ul class="header__right__widget">
                             <li><span class="icon_search search-switch"></span></li>
-                            <li><a href="#"><span class="icon_heart_alt"></span>
-                                <div class="tip">2</div>
-                            </a></li>
+                            
                             <li><a asp-controller="shopping" asp-action="index"><span class="icon_cart_alt"></span>
-                                <div class="tip">
+                                <div id="cartItems" class="tip">
                                     @items
                                     </div>
                             </a></li>
@@ -241,6 +247,39 @@
 <script src="/js/owl.carousel.min.js"></script>
 <script src="/js/jquery.nicescroll.min.js"></script>
 <script src="/js/main.js"></script>
+<script>
+		function AddToCart(id){
+		
+
+
+			//$(al).appendTo('#alerts').show('slow');
+			
+
+
+			 $.ajax({
+                type: "POST",
+                url: `/buy/${id}`,
+                success: function (response) {
+					setTimeout(function() {
+					  $('#alerts').fadeIn('fast');
+					}, 100);
+					setTimeout(function() {
+					  $('#alerts').fadeOut('fast');
+					}, 1000);   
+					$("#cartItems").text(response);
+
+					
+				},
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+		}
+</script>
 @await RenderSectionAsync("Scripts", required: false)
 
 </body>

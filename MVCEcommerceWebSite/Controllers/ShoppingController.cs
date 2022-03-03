@@ -32,19 +32,21 @@ namespace MVCEcommerceWebSite.Controllers
 
             }
             ViewBag.cart = cart;
-
+            
             return View();
         }
 
         [Route("buy/{id}")]
         public IActionResult Buy(long id)
         {
+            int count = 0;
             Product productModel = productService.GetById(id);
             if (SessionHelper.GetObjectFromJson<List<CartItem>>(HttpContext.Session, "cart") == null)
             {
                 List<CartItem> cart = new List<CartItem>();
                 cart.Add(new CartItem { Product = productModel, Quantity = 1 });
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                count = cart.Count;
             }
             else
             {
@@ -59,8 +61,11 @@ namespace MVCEcommerceWebSite.Controllers
                     cart.Add(new CartItem { Product = productModel, Quantity = 1 });
                 }
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
+                count = cart.Count;
+
             }
-            return RedirectToAction("Index");
+            return Ok(count);
+            
         }
 
         [Route("remove/{id}")]
