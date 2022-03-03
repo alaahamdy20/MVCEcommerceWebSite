@@ -247,10 +247,14 @@ namespace MVCEcommerceWebSite.Controllers
         
         public IActionResult ShopByCategory(int[] Categorys)
         {
-            if (Categorys.Length==1 && Categorys[0]==0 ) {
+            if (Categorys.Length == 1 && Categorys[0] == 0)
+            {
                 return PartialView("ShopByColors", productService.GetAll());
             }
-            return PartialView("ShopByColors", productService.GetProductsByCategory(Categorys));
+            else {
+                return PartialView("ShopByColors", productService.GetProductsByCategory(Categorys));
+            }
+          
 
         }
 
