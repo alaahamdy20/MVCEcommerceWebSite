@@ -10,6 +10,8 @@ using Microsoft.Extensions.Hosting;
 using MVCEcommerceWebSite.Data;
 using MVCEcommerceWebSite.Models.Entities;
 using MVCEcommerceWebSite.Services;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +31,8 @@ namespace MVCEcommerceWebSite
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession();
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -41,6 +45,8 @@ namespace MVCEcommerceWebSite
                 )
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+                //.AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +65,7 @@ namespace MVCEcommerceWebSite
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseRouting();
 

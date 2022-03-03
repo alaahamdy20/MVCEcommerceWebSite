@@ -9,9 +9,10 @@
 								
 								<div class="product__item__pic set-bg" style="background-image: url(&quot;@item.ProductImages.FirstOrDefault().FilePath&quot;);" data-setbg="@item.ProductImages.FirstOrDefault().FilePath">
 									<ul class="product__hover">
+										
 										<li><a href="@item.ProductImages.FirstOrDefault().FilePath" class="image-popup"><span class="arrow_expand"></span></a></li>
-										<li><a href="#"><span class="icon_heart_alt"></span></a></li>
 										<li><a asp-action="Details" asp-route-id="@item.Id"><span class="icon_bag_alt"></span></a></li>
+										<li><a asp-controller="shopping" asp-action="buy" asp-route-id="@item.Id"><span class="icon_cart_alt"></span></a></li>
 									</ul>
 								</div>
 								<div class="product__item__text">
