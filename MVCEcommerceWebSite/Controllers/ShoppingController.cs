@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MVCEcommerceWebSite.Data;
 using MVCEcommerceWebSite.Helpers;
 using MVCEcommerceWebSite.Models.Entities;
@@ -8,6 +9,7 @@ using System.Linq;
 
 namespace MVCEcommerceWebSite.Controllers
 {
+    [Authorize]
     public class ShoppingController : Controller
     {
         private readonly IProductService productService;

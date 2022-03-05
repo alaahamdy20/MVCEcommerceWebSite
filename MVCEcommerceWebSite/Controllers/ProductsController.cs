@@ -67,12 +67,14 @@ namespace MVCEcommerceWebSite.Controllers
         }
         #endregion 
 
+
         #region Edit Product By Id
 
 
 
 
         // GET: Products/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -94,6 +96,7 @@ namespace MVCEcommerceWebSite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(long id, [Bind("Id,Name,Description,Price,Stock,Slug,PublishAt,CreatedAt,UpdatedAt")] Product product)
         {
             if (id != product.Id)
@@ -126,7 +129,7 @@ namespace MVCEcommerceWebSite.Controllers
         #endregion
 
         #region Delete Products
-
+        [Authorize(Roles = "Admin")]
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
@@ -162,8 +165,10 @@ namespace MVCEcommerceWebSite.Controllers
         }
         #endregion
 
+
         #region Create Product
         // GET: Products/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
 
@@ -173,6 +178,8 @@ namespace MVCEcommerceWebSite.Controllers
         }
         // new product
         [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Product ProductVM,int[] SelectedIds)
         {
             ViewBag.Categories = new SelectList(categoryService.GetAll(), "Id", "Name");

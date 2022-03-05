@@ -1,0 +1,11 @@
+﻿<form method ="post">
+    <label>Role</label>
+    <input type="text" name="RoleName" />
+    <input type="submit" value="Add" />
+</form>
+<div>
+    @if (TempData.ContainsKey("msg"))
+    {
+        <div>@TempData["msg"].ToString()</div>
+    }
+</div>
