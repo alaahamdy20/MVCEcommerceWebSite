@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -15,7 +16,7 @@ using MVCEcommerceWebSite.ViewModel;
 
 namespace MVCEcommerceWebSite.Controllers
 {
-    
+  //  [Authorize]
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -35,6 +36,7 @@ namespace MVCEcommerceWebSite.Controllers
 
         #region Get Products
         // GET: Products
+       // [AllowAnonymous]
         public IActionResult Index()
         {
             ViewBag.Colors = new SelectList(colorsService.GetAll(), "Id", "Color");
@@ -94,7 +96,7 @@ namespace MVCEcommerceWebSite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(long id, [Bind("Id,Name,Description,Price,Stock,Slug,PublishAt,CreatedAt,UpdatedAt")] Product product)
         {
             if (id != product.Id)
@@ -127,7 +129,7 @@ namespace MVCEcommerceWebSite.Controllers
         #endregion
 
         #region Delete Products
-        [Authorize(Roles = "Admin")]
+       // [Authorize(Roles = "Admin")]
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
@@ -166,7 +168,7 @@ namespace MVCEcommerceWebSite.Controllers
 
         #region Create Product
         // GET: Products/Create
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
 
@@ -176,7 +178,7 @@ namespace MVCEcommerceWebSite.Controllers
         }
         // new product
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+      //  [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Product ProductVM,int[] SelectedIds)
         {
@@ -231,6 +233,10 @@ namespace MVCEcommerceWebSite.Controllers
             ProductVM.Colors = ColorsNew;
 
             productService.Add(ProductVM);
+            SellerUser s = new SellerUser() {userid= User.FindFirstValue(ClaimTypes.NameIdentifier),
+            productid=ProductVM.Id
+            };
+            productService.AddToSeller(s);
             return RedirectToAction(nameof(Index));
         }
 

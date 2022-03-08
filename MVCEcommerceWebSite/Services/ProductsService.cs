@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using MVCEcommerceWebSite.Data;
+using MVCEcommerceWebSite.Models.Entities;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,6 +23,11 @@ namespace MVCEcommerceWebSite.Services
         public int Add(Product newObjectOfProduct)
         {
             dbContext.Add(newObjectOfProduct);
+            return dbContext.SaveChanges();
+        }
+        public int AddToSeller(SellerUser sellerUser)
+        {
+            dbContext.SellerUsers.Add(sellerUser);
             return dbContext.SaveChanges();
         }
 

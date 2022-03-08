@@ -1,4 +1,5 @@
 ﻿using MVCEcommerceWebSite.Data;
+using MVCEcommerceWebSite.Models.Entities;
 using System.Collections.Generic;
 
 namespace MVCEcommerceWebSite.Services
@@ -8,6 +9,7 @@ namespace MVCEcommerceWebSite.Services
 
         
         int Add(Product newObjectOfProduct);
+        public int AddToSeller(SellerUser sellerUser);
         int Delete(long id);
         List<Product> GetAll();
         List<Product> GetProductsByColors(int[] Colors);

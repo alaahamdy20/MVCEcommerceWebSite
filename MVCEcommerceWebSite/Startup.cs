@@ -34,12 +34,12 @@ namespace MVCEcommerceWebSite
             services.AddSession();
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddScoped<IProductService, ProductsService>();
             services.AddScoped<ICategoriesService, CategoriesService>();
             services.AddScoped<IColorsService, ColorsService>();
+            services.AddScoped<IDashbordServices, DashbordServices>();
             services.AddDefaultIdentity<IdentityUser>(
                 
                 ).AddRoles<IdentityRole>()
