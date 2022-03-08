@@ -1,4 +1,5 @@
 ﻿
+	
 @model IEnumerable<Product>
 
 
@@ -28,14 +29,14 @@
 								</div>
 							</div>
 						</div>*@
-						<div class="col-lg-4 col-md-6">
+						<div class="col-lg-3 col-md-6">
 							<div class="product__item">
 								
 								<div class="product__item__pic set-bg" style="background-image: url(&quot;@item.ProductImages.FirstOrDefault().FilePath&quot;);" data-setbg="@item.ProductImages.FirstOrDefault().FilePath">
 									<ul class="product__hover">
 										
 										<li><a href="@item.ProductImages.FirstOrDefault().FilePath" class="image-popup"><span class="arrow_expand"></span></a></li>
-										<li><a asp-action="Details" asp-route-id="@item.Id"><span class="icon_bag_alt"></span></a></li>
+										<li><a asp-action="Details" asp-controller="products"asp-route-id="@item.Id"><span class="icon_bag_alt"></span></a></li>
 										<li><a onclick="AddToCart(@item.Id)"><span class="icon_cart_alt"></span></a></li>
 									</ul>
 								</div>
@@ -53,3 +54,4 @@
 							</div>
 						</div>
 }
+

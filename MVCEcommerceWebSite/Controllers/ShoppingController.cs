@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace MVCEcommerceWebSite.Controllers
 {
-    [Authorize]
+   // [Authorize]
     public class ShoppingController : Controller
     {
         private readonly IProductService productService;

@@ -40,8 +40,8 @@ namespace MVCEcommerceWebSite.Controllers
             ViewData["catagories"] = categoryService.GetAll().Take(5).ToList();
             ViewData["count"] = psCategories.ToList();
 
-            ViewData["p24"]= productService.GetAll().Skip(4).ToList();
-            ViewData["p34"] = productService.GetAll().Skip(8).ToList();
+            ViewData["p24"]= productService.GetAll().Take(4).ToList();
+            ViewData["p34"] = productService.GetAll().Skip(4).Take(4).ToList();
 
             return View(productService.GetAll().Take(8));
         }

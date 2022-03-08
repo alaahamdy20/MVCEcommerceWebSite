@@ -15,7 +15,7 @@ using MVCEcommerceWebSite.ViewModel;
 
 namespace MVCEcommerceWebSite.Controllers
 {
-    [Authorize]
+    
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -35,7 +35,6 @@ namespace MVCEcommerceWebSite.Controllers
 
         #region Get Products
         // GET: Products
-        [AllowAnonymous]
         public IActionResult Index()
         {
             ViewBag.Colors = new SelectList(colorsService.GetAll(), "Id", "Color");
@@ -48,7 +47,6 @@ namespace MVCEcommerceWebSite.Controllers
         #region Get Details Of ProductById
 
         // GET: Products/Details/5
-        [AllowAnonymous]
         public async Task<IActionResult> Details(long? id)
         {
             ViewData["categories"] = categoryService.GetAll();
@@ -262,6 +260,19 @@ namespace MVCEcommerceWebSite.Controllers
                 return PartialView("ShopByColors", productService.GetProductsByCategory(Categorys));
             }
           
+
+        }
+        public IActionResult ShopByCategoryHome(int[] Categorys)
+        {
+            if (Categorys.Length == 1 && Categorys[0] == 0)
+            {
+                return PartialView("_Shop", productService.GetAll());
+            }
+            else
+            {
+                return PartialView("_Shop", productService.GetProductsByCategory(Categorys));
+            }
+
 
         }
 

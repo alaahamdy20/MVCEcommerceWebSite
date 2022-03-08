@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<Product>
+@{
     ViewData["Title"] = "Home Page";
     List<Category> categorys = ViewBag.catagories ;
     List<int> countCategories = ViewBag.count ;
@@ -95,8 +96,12 @@
         </div>
     </div>
 </section>
-<div style="display:flex; flex-wrap: wrap;" id="con" >
-	      <partial name="ShopByColors"></partial>
+<div class="col-lg-12 col-md-12">
+
+				
+				<div id="con" class="row">
+                    <partial name="_Shop"></partial>
+                    </div>
 </div>
 
        
@@ -146,7 +151,7 @@
                     <div class="section-title">
                         <h4>Hot Trend</h4>
                     </div>
-                      <partial name="_trendPartial"></partial>
+                      <partial name="_trendPartial" model="Model.Take(4)"></partial>
 
                     
 
@@ -165,7 +170,7 @@
                     <div class="section-title">
                         <h4>Feature</h4>
                     </div>
-                     <partial name="_trendPartial"  model="@ViewBag.p34"></partial>
+                     <partial name="_trendPartial"  model="@ViewBag.p34" style=""></partial>
                   
                 </div>
             </div>
@@ -317,7 +322,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/Products/ShopByCategory",
+                url: "/Products/ShopByCategoryHome",
                 data:  {Categorys:Category},
                 success: function (response) {
 					$("#con").html(response);

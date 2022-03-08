@@ -42,7 +42,7 @@ namespace MVCEcommerceWebSite
             services.AddScoped<IColorsService, ColorsService>();
             services.AddDefaultIdentity<IdentityUser>(
                 
-                )
+                ).AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
                 //.AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

@@ -11,12 +11,14 @@ namespace Ecomerce_test1.Controllers
     {
 
         private readonly RoleManager<IdentityRole> roleManager;
-        public UserController(
-                                 RoleManager<IdentityRole> roleManager)
+        private readonly UserManager<IdentityUser> userManager;
+
+        public UserController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
         {
             this.roleManager = roleManager;
+            this.userManager = userManager;
         }
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet]//from anchor tag
         public IActionResult NEw()
         {
@@ -44,17 +46,28 @@ namespace Ecomerce_test1.Controllers
             return View();
         }
 
-     
 
+      
+        public async Task<IActionResult> Update()
+        {
+            var user = userManager.FindByNameAsync("Alaa@gmail.com");
+            await userManager.AddToRoleAsync(await user, "Admin");
 
-
-
-
-
-
-
-
+            return Ok();
+            
         }
+
+
+
+
+
+
+
+
+
+
+
+    }
 
 
 
