@@ -77,6 +77,9 @@ namespace MVCEcommerceWebSite.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(long? id)
         {
+            ViewBag.Colors = new SelectList(colorsService.GetAll(), "Id", "Color");
+            ViewBag.Categories = new SelectList(categoryService.GetAll(), "Id", "Name");
+
             if (id == null)
             {
                 return NotFound();
@@ -99,6 +102,8 @@ namespace MVCEcommerceWebSite.Controllers
         //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(long id, [Bind("Id,Name,Description,Price,Stock,Slug,PublishAt,CreatedAt,UpdatedAt")] Product product)
         {
+            ViewBag.Colors = new SelectList(colorsService.GetAll(), "Id", "Color");
+            ViewBag.Categories = new SelectList(categoryService.GetAll(), "Id", "Name");
             if (id != product.Id)
             {
                 return NotFound();
@@ -168,7 +173,7 @@ namespace MVCEcommerceWebSite.Controllers
 
         #region Create Product
         // GET: Products/Create
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
 
@@ -178,7 +183,7 @@ namespace MVCEcommerceWebSite.Controllers
         }
         // new product
         [HttpPost]
-      //  [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Product ProductVM,int[] SelectedIds)
         {

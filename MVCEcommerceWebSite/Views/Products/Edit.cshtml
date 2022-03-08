@@ -10,38 +10,86 @@
 <h4>Product</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Stock" class="control-label"></label>
-                <input asp-for="Stock" class="form-control" />
-                <span asp-validation-for="Stock" class="text-danger"></span>
-            </div>
-            
-            
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+		<div class="col-md-4">
+			<form asp-action="Create" enctype="multipart/form-data">
+				<div asp-validation-summary="All" class="text-danger"></div>
+				<div class="form-group">
+					<label asp-for="Name" class="control-label"></label>
+					<input asp-for="Name" class="form-control" />
+					<span asp-validation-for="Name" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Description" class="control-label"></label>
+					<input asp-for="Description" class="form-control" />
+					<span asp-validation-for="Description" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Price" class="control-label"></label>
+					<input asp-for="Price" class="form-control" />
+					<span asp-validation-for="Price" class="text-danger"></span>
+				</div>
+				<div class="form-group">
+					<label asp-for="Stock" class="control-label"></label>
+					<input asp-for="Stock" class="form-control" />
+					<span asp-validation-for="Stock" class="text-danger"></span>
+				</div>
+				
+				<select asp-for="CategoryId" asp-items="ViewBag.Categories">
+				</select>
+				<br />
+
+			@foreach (var item in ViewBag.Colors)
+				{
+				<input name="SelectedIds" value="@item.Value" type="checkbox" />
+				<label >@item.Text</label>
+				<label hidden name="colors.Color.Color">@item.Text</label>
+				<label hidden name="Colors.Id">@item.Value</label>
+				<br />
+				}
+				<div class="form-group">
+					<div class="row flex-nowrap">
+						<div class="column">
+							<div>
+								<img id="output1" src="/img/product/details/thumb-4.jpg" alt="">
+
+							</div>
+							<input asp-for="ProductImages" accept="image/*" onchange="document.getElementById('output1').src = window.URL.createObjectURL(this.files[0])" id="fileInput" type="file">
+
+						</div>
+						<div class="column">
+							<div>
+								<img id="output2" src="/img/product/details/thumb-4.jpg" alt="">
+
+							</div>
+							<input asp-for="ProductImages" accept="image/*" onchange="document.getElementById('output2').src = window.URL.createObjectURL(this.files[0])" id="fileInput" type="file">
+
+						</div>
+						<div class="column">
+							<div>
+								<img id="output3" src="/img/product/details/thumb-4.jpg" alt="">
+
+							</div>
+							<input asp-for="ProductImages" accept="image/*" onchange="document.getElementById('output3').src = window.URL.createObjectURL(this.files[0])" id="fileInput" type="file">
+
+						</div>
+
+						<div class="column">
+							<div>
+								<img class="img-fluid" id="output4" src="/img/product/details/thumb-4.jpg" alt="">
+
+							</div>
+							<input asp-for="ProductImages" accept="image/*" onchange="document.getElementById('output4').src = window.URL.createObjectURL(this.files[0])" id="fileInput" type="file">
+
+						</div>
+
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Create" class="btn btn-primary" />
+				</div>
+			</form>
+		</div>
+	</div>
 
 <div>
     <a asp-action="Index">Back to List</a>
