@@ -29,11 +29,12 @@ namespace MVCEcommerceWebSite.Data
         public virtual DbSet<FileUpload> FileUploads { get; set; }
         public virtual DbSet<ShoppingSession> ShoppingSessions { get; set; }
         public virtual DbSet<CartItem> CartItems { get; set; }
+        public virtual DbSet<SellerUser> SellerUsers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-
+            modelBuilder.Entity<SellerUser>().HasKey(t =>new { t.userid ,t.productid}) ;
             
 
                 modelBuilder.Entity<Order>(entity =>

@@ -1,0 +1,42 @@
+﻿@model List<Product>
+<table class="table table-hover"> 
+    
+    <tr><td>numper of products= @Model.Count</td>
+        
+         <td> <a class="btn btn-primary" href="/products/Create" role="button">Post new product</a></td>
+         
+     </tr>
+    
+</table>
+   
+
+    <table class="table table-hover ">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>edite</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+    <tbody>
+
+  
+
+    @foreach (var item in Model)
+   {
+             <tr>
+                <td>@item.Name</td>
+                <td>@item.Price</td>
+                <td>@item.Stock</td>
+                <td>
+                    <a class="btn btn-primary" href="/products/Edit/@item.Id" role="button">edite</a>
+                </td>
+                <td>
+                    <a class="btn btn-primary" href="/products/Delete/@item.Id" role="button">Delete</a>
+                </td>
+            </tr>
+        }
+     </tbody>
+     </table>

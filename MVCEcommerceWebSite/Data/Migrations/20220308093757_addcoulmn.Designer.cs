@@ -4,14 +4,16 @@ using MVCEcommerceWebSite.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MVCEcommerceWebSite.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220308093757_addcoulmn")]
+    partial class addcoulmn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -254,9 +256,14 @@ namespace MVCEcommerceWebSite.Data.Migrations
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Products");
                 });
@@ -302,21 +309,6 @@ namespace MVCEcommerceWebSite.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Colors");
-                });
-
-            modelBuilder.Entity("MVCEcommerceWebSite.Models.Entities.SellerUser", b =>
-                {
-                    b.Property<string>("userid")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<long>("productid")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("userid", "productid");
-
-                    b.HasIndex("productid");
-
-                    b.ToTable("SellerUsers");
                 });
 
             modelBuilder.Entity("MVCEcommerceWebSite.Models.Entities.ShoppingSession", b =>
@@ -648,7 +640,13 @@ namespace MVCEcommerceWebSite.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
                     b.Navigation("Category");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MVCEcommerceWebSite.Models.Entities.CartItem", b =>
@@ -668,25 +666,6 @@ namespace MVCEcommerceWebSite.Data.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("Session");
-                });
-
-            modelBuilder.Entity("MVCEcommerceWebSite.Models.Entities.SellerUser", b =>
-                {
-                    b.HasOne("MVCEcommerceWebSite.Data.Product", "product")
-                        .WithMany()
-                        .HasForeignKey("productid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("userid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("product");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MVCEcommerceWebSite.Models.Entities.ShoppingSession", b =>
